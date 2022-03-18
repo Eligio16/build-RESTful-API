@@ -91,6 +91,16 @@ app.route('/articles/:articleId')
             } else {res.send('Dato actualizado')}
         }
     )
+})
+.delete((req, res) => {
+    Article.deleteOne(
+        {title: req.params.articleId},
+        (err) => {
+            if (!err){
+                res.send('Deleteado con exito')
+            } else {res.send(err)}
+        }
+    )
 });
 
 //Correr el server en el puerto 3k
