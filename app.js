@@ -61,5 +61,26 @@ app.route('/articles')
     });
 });
 
+//App route chain for articles
+app.route('/articles/:articleId')
+
+.get((req, res) => {
+    Article.findOne({title: req.params.articleId}, (err, foundArticle) => {
+        if (foundArticle){
+            res.send(foundArticle)
+        } else {res.send('Not found match')}
+    })
+})
+.put((req, res) => {
+    Article.updateOne(
+        {title: req.params.articleId}, 
+        {title: req.body.title, content: req.body.content},
+        (err, doc) => {
+            if (err){
+                res.send(err);
+            } else {res.send('Documento actualizado' + doc)}
+        });
+});
+
 //Correr el server en el puerto 3k
 app.listen(3000, () => console.log('Server running on port 3000'));
