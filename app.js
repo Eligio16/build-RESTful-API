@@ -55,6 +55,14 @@ app.post('/articles', (req, res) => {
     });
 });
 
+//Metodo DELETE - Elimina todos los documentos en la BD
+app.delete('/articles', (req, res) => {
+    Article.deleteMany((err) => {
+        if (!err){
+            res.send('Succesfully deleted all articles.')
+        } else {res.send(err)}
+    })
+});
 
 //Correr el server en el puerto 3k
 app.listen(3000, () => console.log('Server running on port 3000'));
