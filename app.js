@@ -32,17 +32,16 @@ const wikiSchema = new mongoose.Schema({
 //Modelo de conexion
 const Article = mongoose.model('Article', wikiSchema);
 
-//Metodo GET y consulta todos los documentos de tipo article
-app.get('/articles', (req, res) => {
+//App route - chain method
+app.route('/articles')
+.get((req, res) => {
     Article.find((err, foundArticles) => {
         if(!err){
             res.send(foundArticles);
         } else{res.send(err)}
     });
-});
-
-//Metodo POST - Inserta nuevos documentos en la BD
-app.post('/articles', (req, res) => {
+})
+.post((req, res) => {
     const newArticle = new Article({
         title: req.body.title,
         content: req.body.content
@@ -53,15 +52,13 @@ app.post('/articles', (req, res) => {
             res.send('Guardado con exito')
         } else {res.send(err)}
     });
-});
-
-//Metodo DELETE - Elimina todos los documentos en la BD
-app.delete('/articles', (req, res) => {
+})
+.delete((req, res) => {
     Article.deleteMany((err) => {
         if (!err){
             res.send('Succesfully deleted all articles.')
         } else {res.send(err)}
-    })
+    });
 });
 
 //Correr el server en el puerto 3k
