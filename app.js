@@ -72,7 +72,7 @@ app.route('/articles/:articleId')
     })
 })
 .put((req, res) => {
-    Article.updateOne(
+    Article.replaceOne(
         {title: req.params.articleId}, 
         {title: req.body.title, content: req.body.content},
         (err, doc) => {
@@ -80,6 +80,17 @@ app.route('/articles/:articleId')
                 res.send(err);
             } else {res.send('Documento actualizado' + doc)}
         });
+})
+.patch((req, res) => {
+    Article.updateOne(
+        {title: req.params.articleId},
+        {$set: req.body},
+        (err, doc) => {
+            if (err){
+                res.send(err);
+            } else {res.send('Dato actualizado')}
+        }
+    )
 });
 
 //Correr el server en el puerto 3k
